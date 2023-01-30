@@ -3,11 +3,11 @@ import { Signup } from "./pages/signup";
 import { Login } from "./pages/login";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/">
           <Route index element={<Landing />} />
@@ -15,7 +15,7 @@ export default function App() {
           <Route path="login" element={<Login />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
