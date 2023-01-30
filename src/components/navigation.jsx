@@ -1,10 +1,11 @@
 import React from "react";
+import { Outlet, Link } from "react-router-dom";
 
 export function Navigation({ fixed }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   return (
     <>
-      <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 mb-3">
+      <nav className="relative flex flex-wrap items-center justify-between px-2 py-3">
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <a
@@ -30,46 +31,47 @@ export function Navigation({ fixed }) {
           >
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto items-center">
             <li className="nav-item">
-                <a
-                  className="px-3 py-2 flex items-center text-md font-bold leading-snug text-black hover:opacity-75 font-light"
-                  href="#demo"
-                ><button class="button">Demo</button>
-                </a>
+
+                   <Link
+                    className="px-3 py-2 flex items-center text-md font-bold leading-snug text-black hover:opacity-75 font-light"
+                    to="/#demo"
+                  ><button class="button">Demo</button>
+                  </Link>
               </li>
               <li className="nav-item">
-                <a
+                <Link
                   className="px-3 py-2 flex items-center text-md font-bold leading-snug text-black hover:opacity-75 font-light"
-                  href="#jobs"
+                  to="/#jobs"
                 ><button class="button">Available Jobs</button>
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a
+                <Link
                   className="px-3 py-2 flex items-center text-md text-black font-bold leading-snug text-black hover:opacity-75 font-light"
-                  href="#process"
+                  to="/#process"
                 >Process
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a
+                <Link
                   className="px-3 py-2 flex items-center text-md  font-bold leading-snug text-black hover:opacity-75 font-light"
-                  href="#requirements"
+                  to="/#requirements"
                 >Requirements
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a
+                <Link
                   className="px-3 py-2 flex items-center text-md  font-bold leading-snug text-black hover:opacity-75 font-light"
-                  href="#login"
+                  to="/login"
                 >Login
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a
+                <Link
                   className="px-3 py-2 flex items-center text-md font-bold leading-snug text-black hover:opacity-75 font-light"
-                  href="#sign-up"
+                  to="/signup"
                 ><button class="rounded bg-primary px-3 py-1">Sign up</button>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

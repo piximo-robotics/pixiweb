@@ -1,4 +1,5 @@
 import React from "react";
+import { Outlet, Link } from "react-router-dom";
 
 export function Header({ fixed }) {
   return (
@@ -13,11 +14,11 @@ export function Header({ fixed }) {
           </div>
           <h2 class="text-wrap text-xl"> We need drivers like <b>you</b> to drive Pixi around CMU in exchange for rewards. All it takes is your keyboard and a few minutes.</h2>
           <div class="flex flex-row items-center space-x-5">
-            <a
+            <Link
                     className="flex text-md font-bold leading-snug text-black hover:opacity-75 font-light"
-                    href="#sign-up"
+                    to="/signup"
                   ><button class="rounded bg-primary px-3 py-1 m-auto">Sign up</button>
-            </a>
+            </Link>
             <a
                     className="flex text-md font-bold leading-snug text-black hover:opacity-75 font-light"
                     href="#demo"

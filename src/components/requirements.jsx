@@ -3,7 +3,7 @@ import React from "react";
 export function Requirements({ fixed }) {
   return (
     <>
-      <div id="requirements" class="bg-primary flex flex-col lg:flex-row items-end pb-10 justify-evenly text-right mx-20 mb-10 h-40 rounded-xl text-xl font-light">
+      <div id="requirements" class="bg-primary flex flex-col lg:flex-row items-end pb-10 justify-evenly text-right mx-20 mb-10 h-40 rounded-xl text-xl font-light text-white">
         
         <div class="flex flex-col text-2xl justify-left text-left px-50 lg:col-span-3 w-2/5 space-y-2 font-normal">
 
