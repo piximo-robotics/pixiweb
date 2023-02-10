@@ -1,17 +1,18 @@
-import { useState, useEffect} from 'react'
+import { useState, useEffect, useReducer} from 'react'
 import { auth } from '../firebase/firebase'
-import { useNavigate, Link } from 'react-router-dom'
-import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
+import { useNavigate, Link, Navigate } from 'react-router-dom'
+import { createUserWithEmailAndPassword, getIdToken, sendEmailVerification } from 'firebase/auth'
 import { useAuthValue } from '../firebase/AuthContext'
 import { Navigation } from '../components/navigation'
 import { Verify } from '../components/verify'
-import { Dash } from '../components/dash'
+import { Dash } from './dash'
 import { Loading } from '../components/loading'
 
 export function Steps() {
   const {currentUser} = useAuthValue()
   const [active, setActive] = useState(1)
   const {timeActive, setTimeActive} = useAuthValue()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -20,7 +21,7 @@ export function Steps() {
         setActive(2)
         if(currentUser?.emailVerified){
           clearInterval(interval)
-          setActive(3)
+          currentUser?.getIdToken(true).then(() => {setActive(3)})
         }
       })
       .catch((err) => {
@@ -28,6 +29,8 @@ export function Steps() {
       })
     }, 1000)
   }, [currentUser])
+
+  
 
   return (
     <>
@@ -37,7 +40,7 @@ export function Steps() {
       ) : active === 2 ? (
         <Verify />
       ) : active === 3 ? (
-        <Dash />
+        <Navigate to="/" />
       ) : null}
     </>
   )

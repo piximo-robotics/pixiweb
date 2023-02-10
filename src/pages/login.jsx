@@ -33,7 +33,7 @@ export const Login = () => {
         })
       .catch(err => alert(err.message))
     }else{
-      navigate('/steps')
+      navigate('/')
     }
     })
     .catch(err => setError(err.message))

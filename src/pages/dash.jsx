@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react'
 import {auth} from '../firebase/firebase'
 import {Profile} from '../components/profile'
 import {Timeslots} from '../components/timeslots'
+import { Navigation } from '../components/navigation'
 
 export function Dash() {
 
@@ -38,7 +39,8 @@ export function Dash() {
 
   return (
     <>
-      <div class="mx-20">
+      <Navigation />
+      <div class="mx-20 mb-20 ">
 
         <div class="p-5 flex flex-row justify-center space-x-5">
             <button onClick={setProfile} className={`border-none px-5 py-2 flex items-center text-md leading-snug  hover:opacity-75 font-light rounded-3xl ${profileCSS}` }>Edit your Profile</button>
