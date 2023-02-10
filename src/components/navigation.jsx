@@ -1,5 +1,6 @@
 import React from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import { HashLink as Link } from "react-router-hash-link";
 
 export function Navigation({ fixed }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
@@ -10,7 +11,7 @@ export function Navigation({ fixed }) {
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <a
               className="text-3xl font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap text-black"
-              href="#header"
+              href="/"
             >
               piximo.
             </a>
@@ -52,13 +53,13 @@ export function Navigation({ fixed }) {
                 >Process
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link
                   className="px-3 py-2 flex items-center text-md  font-bold leading-snug text-black hover:opacity-75 font-light"
-                  to="/#requirements"
+                  to="#requirements"
                 >Requirements
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item">
                 <Link
                   className="px-3 py-2 flex items-center text-md  font-bold leading-snug text-black hover:opacity-75 font-light"
@@ -68,9 +69,9 @@ export function Navigation({ fixed }) {
               </li>
               <li className="nav-item">
                 <Link
-                  className="px-3 py-2 flex items-center text-md font-bold leading-snug text-black hover:opacity-75 font-light"
+                  className="px-3 py-2 flex items-center text-md font-bold leading-snug text-white hover:opacity-75 font-light"
                   to="/signup"
-                ><button class="rounded bg-primary px-3 py-1">Sign up</button>
+                ><button class="rounded-xl bg-primary px-4 py-1">Sign up</button>
                 </Link>
               </li>
             </ul>

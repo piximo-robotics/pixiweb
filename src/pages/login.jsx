@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
 import { Navigation } from "../components/navigation";
+import {signInWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
+import {auth} from '../firebase/firebase'
+import {useNavigate} from 'react-router-dom'
+import {useAuthValue} from '../firebase/AuthContext'
 // import JsonData from "./data/data.json";
 // import SmoothScroll from "smooth-scroll";
 
@@ -10,6 +14,30 @@ import { Navigation } from "../components/navigation";
 // });
 
 export const Login = () => {
+  
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('') 
+  const [error, setError] = useState('')
+  const {setTimeActive} = useAuthValue()
+  const navigate = useNavigate()
+
+  const login = e => {
+    e.preventDefault()
+    signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      if(!auth.currentUser.emailVerified) {
+        sendEmailVerification(auth.currentUser)
+        .then(() => {
+          setTimeActive(true)
+          navigate('/steps')
+        })
+      .catch(err => alert(err.message))
+    }else{
+      navigate('/steps')
+    }
+    })
+    .catch(err => setError(err.message))
+  };
   // const [landingPageData, setLandingPageData] = useState({});
   // useEffect(() => {
   //   setLandingPageData(JsonData);
@@ -19,24 +47,21 @@ export const Login = () => {
     <div>
       <Navigation />
       <section class="bg-white">
-        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <h1 class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-            Get access to your Piximo Portal.
-          </h1>
+        <div class="flex flex-col items-center justify-center px-8 py-10 my-10 mx-auto lg:py-0">
 
-          <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          <div class="w-full bg-white rounded-lg border dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 class="text-xl font-bold leading-tight tracking-tight text-primary md:text-2xl dark:text-white">
                 Login
               </h1>
-              <form class="space-y-4 md:space-y-6" action="#">
+              <form class="space-y-4 md:space-y-6" onSubmit={login}>
                 <div>
                   <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                  <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@andrew.cmu.edu" required="" />
+                  <input type="email" name="email" id="email" value={email} onChange={e => setEmail(e.target.value)}class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@andrew.cmu.edu" required="" />
                 </div>
                 <div>
                   <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                  <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
+                  <input type="password" name="password" id="password" value={password} onChange={e => setPassword(e.target.value)}c placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
                 </div>
                 <div class="flex items-start">
                   <div class="flex items-center h-5">

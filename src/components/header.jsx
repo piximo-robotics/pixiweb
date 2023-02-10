@@ -17,7 +17,7 @@ export function Header({ fixed }) {
             <Link
                     className="flex text-md font-bold leading-snug text-black hover:opacity-75 font-light"
                     to="/signup"
-                  ><button class="rounded bg-primary px-3 py-1 m-auto">Sign up</button>
+                  ><button class="rounded-xl bg-primary text-white px-5 py-1 m-auto">Sign up</button>
             </Link>
             <a
                     className="flex text-md font-bold leading-snug text-black hover:opacity-75 font-light"
