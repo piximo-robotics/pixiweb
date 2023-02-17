@@ -8934,7 +8934,11 @@
   "resolved" "https://registry.npmjs.org/react-tailwind/-/react-tailwind-0.0.0.tgz"
   "version" "0.0.0"
 
+<<<<<<< HEAD
 "react@^18.0.0", "react@^18.2.0", "react@>= 16", "react@>= 16.8 || 18.0.0", "react@>=15", "react@>=16.8":
+=======
+"react@^18.0.0", "react@^18.2.0", "react@>= 16", "react@>=15", "react@>=16.8":
+>>>>>>> 1b8460c55cd27fbdd10eab72ea64facdb9d75059
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"
@@ -10109,7 +10113,11 @@
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-1.11.1.tgz"
   "version" "1.11.1"
 
+<<<<<<< HEAD
 "tslib@^2.0.3", "tslib@^2.1.0", "tslib@^2.4.0":
+=======
+"tslib@^2.0.3", "tslib@^2.1.0":
+>>>>>>> 1b8460c55cd27fbdd10eab72ea64facdb9d75059
   "integrity" "sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA=="
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-2.4.1.tgz"
   "version" "2.4.1"
