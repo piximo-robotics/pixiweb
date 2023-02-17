@@ -36,7 +36,7 @@ export default function App() {
   }, [])
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <AuthProvider value={{ currentUser, timeActive, setTimeActive }}>
         <Routes>
 

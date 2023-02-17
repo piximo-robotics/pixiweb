@@ -4,6 +4,8 @@ import { Outlet, Link, useNavigate } from "react-router-dom";
 import { Navigation } from "../components/navigation";
 import {createUserWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
 import {useAuthValue} from '../firebase/AuthContext';
+import {ref, set} from "firebase/database";
+import {db} from "../firebase/firebase";
 
 export function Signup() {
 
@@ -13,7 +15,6 @@ export function Signup() {
   const [error, setError] = useState('')
   const navigate = useNavigate()
   const {setTimeActive} = useAuthValue()
-  console.log(setTimeActive)
 
   const validatePassword = () => {
     let isValid = true
@@ -33,6 +34,11 @@ export function Signup() {
       // Create a new user with email and password using firebase
         createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
+          set(ref(db, 'users/' + auth.currentUser.uid), {
+            uid: auth.currentUser.uid,
+            email: auth.currentUser.email,
+            verified: auth.currentUser.emailVerified,
+          });
           sendEmailVerification(auth.currentUser)   
           .then(() => {
             setTimeActive(true)

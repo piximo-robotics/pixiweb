@@ -7,6 +7,8 @@ import { Navigation } from '../components/navigation'
 import { Verify } from '../components/verify'
 import { Dash } from './dash'
 import { Loading } from '../components/loading'
+import {ref, set} from "firebase/database"
+import {db} from "../firebase/firebase"
 
 export function Steps() {
   const {currentUser} = useAuthValue()
@@ -21,6 +23,7 @@ export function Steps() {
         setActive(2)
         if(currentUser?.emailVerified){
           clearInterval(interval)
+          set(ref(db, "users/" + currentUser?.uid + "/verified"), true)
           currentUser?.getIdToken(true).then(() => {setActive(3)})
         }
       })
