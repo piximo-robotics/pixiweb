@@ -1,12 +1,8 @@
 {
   "name": "piximo",
   "version": "0.1.0",
-<<<<<<< HEAD
   "private": false,
   "homepage": "https://piximo-robotics.github.io/pixiweb",
-=======
-  "private": true,
->>>>>>> 1b8460c55cd27fbdd10eab72ea64facdb9d75059
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
@@ -14,10 +10,7 @@
     "firebase": "^9.16.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-<<<<<<< HEAD
     "react-dropzone": "^14.2.3",
-=======
->>>>>>> 1b8460c55cd27fbdd10eab72ea64facdb9d75059
     "react-router-hash-link": "^2.4.3",
     "react-scripts": "5.0.1",
     "react-tailwind": "^0.0.0",
