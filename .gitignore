@@ -23,8 +23,4 @@ yarn-debug.log*
 yarn-error.log*
 
 #keys
-<<<<<<< HEAD
 ./src/firebase/firebase.js
-=======
-./firebase/firebase.js
->>>>>>> 1b8460c55cd27fbdd10eab72ea64facdb9d75059
