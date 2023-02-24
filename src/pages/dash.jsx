@@ -4,6 +4,7 @@ import {auth} from '../firebase/firebase'
 import {Profile} from '../components/profile'
 import {Timeslots} from '../components/timeslots'
 import { Navigation } from '../components/navigation'
+import { Admin } from '../components/admin'
 
 export function Dash() {
 
@@ -36,6 +37,12 @@ export function Dash() {
     setTimeslotCSS("text-white bg-primary")
     setProfileCSS("text-black")
   }
+  const setAdmin = e => {
+    setTab("Admin")
+    changeCSS()
+    setTimeslotCSS("text-white bg-primary")
+    setProfileCSS("text-black")
+  }
 
   return (
     <>
@@ -43,14 +50,17 @@ export function Dash() {
       <div class="mx-20 mb-20 ">
 
         <div class="p-5 flex flex-row justify-center space-x-5">
-            <button onClick={setProfile} className={`border-none px-5 py-2 flex items-center text-md leading-snug  hover:opacity-75 font-light rounded-3xl ${profileCSS}` }>Edit your Profile</button>
-            <button onClick={setTimeslots} className={`border-none px-5 py-2 flex items-center text-md leading-snug hover:opacity-75 font-light rounded-3xl ${timeslotCSS}`}>Select your Timeslots</button>
+            <button onClick={setProfile} className={`border-none px-5 py-2 flex items-center text-md leading-snug  hover:opacity-75 font-light rounded-3xl ${profileCSS}` }>Profile</button>
+            <button onClick={setTimeslots} className={`border-none px-5 py-2 flex items-center text-md leading-snug hover:opacity-75 font-light rounded-3xl ${timeslotCSS}`}>Timeslots</button>
+            <button onClick={setAdmin} className={`border-none px-5 py-2 flex items-center text-md leading-snug hover:opacity-75 font-light rounded-3xl ${timeslotCSS}`}>Admin</button>
         </div>
 
         {tab === "Profile" ? (
         <Profile />
       ) : tab === "Timeslots" ? (
         <Timeslots />
+      ) : tab === "Admin" ? (
+        <Admin />
       ) : null}
       </div>
     </>

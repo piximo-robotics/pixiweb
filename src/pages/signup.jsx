@@ -38,6 +38,7 @@ export function Signup() {
             uid: auth.currentUser.uid,
             email: auth.currentUser.email,
             verified: auth.currentUser.emailVerified,
+            training: false,
           });
           sendEmailVerification(auth.currentUser)   
           .then(() => {
