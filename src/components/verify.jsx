@@ -34,6 +34,7 @@ export function Verify() {
 
   return (
     <>
+    
       <div class="flex flex-row justify-center text-center">
         <div class="w-1/3 md:mx-12 bg-white rounded-lg border shadow dark:border md:mt-0 my-10  xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div class="p-6 space-y-4 md:space-y-6 sm:pt-8 sm:px-8">

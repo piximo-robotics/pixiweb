@@ -1,18 +1,28 @@
 import React,  {useState, useEffect} from "react";
 import { HashLink as Link } from "react-router-hash-link"
 import { useAuthValue  } from '../firebase/AuthContext'
-import {auth} from '../firebase/firebase'
+import {auth, db} from '../firebase/firebase'
+import { get, ref } from 'firebase/database'
 import {signOut, onAuthStateChanged} from 'firebase/auth'
 import logo from '../logo.svg'
 
 function Links(props) {
   const {currentUser} = useAuthValue()
   const [user, setUser] = useState(currentUser)
+  const [greet, setGreet] = useState(user?.email)
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setUser(user)
     })
+    if (currentUser) {
+
+      setInterval(() => {
+        get(ref(db, `users/${currentUser?.uid}/`)).then((snapshot) => {
+          setGreet(snapshot.val().name)
+        })
+      }, 1000)
+    }
   }, [])
   if (user) {
     return (
@@ -33,8 +43,10 @@ function Links(props) {
                 ><button class="button">Available Jobs</button>
                 </Link>
               </li> */}
-              <li className="nav-item font-bold ">
-                Welcome {user?.email}.
+              <li className="nav-item">
+                Hello <b>
+                {greet}.
+                  </b>
               </li>
               <li className="nav-item">
                 <button

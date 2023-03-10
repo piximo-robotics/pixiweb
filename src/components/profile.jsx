@@ -1,7 +1,7 @@
 import { useAuthValue } from '../firebase/AuthContext'
 import { useState, useEffect } from 'react'
 import { auth, db, storage } from "../firebase/firebase"
-import { update, ref } from "firebase/database"
+import { update, ref,get } from "firebase/database"
 import { useDropzone } from 'react-dropzone'
 import { getDownloadURL, ref as sref, uploadBytes } from "firebase/storage";
 
@@ -14,8 +14,26 @@ export function Profile() {
   const [major, setMajor] = useState('')
   const [birth, setBirth] = useState('')
   const [phone, setPhone] = useState('')
+  const [editMode, isEditMode] = useState(true)
+  const [mount, setMount] = useState(false)
 
-
+  useEffect(() => {
+    if (!mount) {
+      setMount(true)
+      get(ref(db, `users/${currentUser?.uid}/`)).then((snapshot) => {
+        if (snapshot.val().major || snapshot.val().phone || snapshot.val().pfpName || snapshot.val().name || snapshot.val().year) {
+          isEditMode(false)
+        }
+        setMajor(snapshot.val().major)
+        setPhone(snapshot.val().phone)
+        if (snapshot.val().pfp && snapshot.val().pfpName) {
+          setPFP([{preview: snapshot.val().pfp, name: snapshot.val().pfpName}])
+        }
+        setName(snapshot.val().name)
+        setBirth(snapshot.val().year)
+      })
+    }
+  })
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
@@ -37,11 +55,13 @@ export function Profile() {
       getDownloadURL(snapshot.ref).then((downloadURL) => {
         update(ref(db, "users/" + currentUser?.uid + "/"), {
           pfp: downloadURL,
+          pfpName: pfp[0].name,
           name: name,
           phone: phone,
           major: major,
           year: birth,
         })
+        isEditMode(false)
       })
     });
   };
@@ -72,6 +92,7 @@ export function Profile() {
 
   return (
     <>
+      {editMode ? (
       <div class="flex flex-row justify-center">
         <div class="w-full md:mx-12 bg-white rounded-lg border shadow dark:border md:mt-0  xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -125,7 +146,211 @@ export function Profile() {
             </form>
           </div>
         </div>
+      </div>): (
+      <div class="flex flex-row space-x-4">
+        <div class="basis-1/3 space-y-4">
+        {/* <div class="flex flex-row justify-between">
+        <p class="font-sm font-bold text-gray-500">PROFILE</p>
+        <div class="font-sm flex flex-row">
+          EDIT
+        </div>
+        </div> */}
+        <div class="py-4 px-6 border rounded-xl">
+          <div class="text-center flex flex-row justify-center">
+
+          <img src={pfp[0].preview} alt={pfp[0].name} class="rounded-lg w-20 h-20 object-cover text-center"></img>
+          </div>
+          <div class="flex flex-row  text-center">
+            <p class="text-2xl text-center w-full font-bold my-3">
+              {name}
+            </p>
+          </div>
+          <div class="flex flex-row">
+            <p class="basis-1/2">
+              <b>
+                Phone:
+                </b>
+            </p>
+            <p class="basis-1/2">
+              {phone}
+            </p>
+          </div>
+          <div class="flex flex-row">
+            <p class="basis-1/2">
+              <b>
+                Major:
+                </b>
+            </p>
+            <p class="basis-1/2">
+              {major}
+            </p>
+          </div>
+          <div class="flex flex-row">
+            <p class="basis-1/2">
+              <b>
+                Birthday:
+                </b>
+            </p>
+            <p class="basis-1/2">
+              {birth}
+            </p>
+          </div>
+          <div onClick={() => isEditMode(true)} class="flex flex-row items-center justify-end mt-4 space-x-2 text-gray-500 hover:text-gray-700 hover:cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+</svg>
+
+            <p class="font-xs">Edit profile</p>
+          </div>
+        </div>
+        </div>
+        <div class="basis-2/3">
+          <div class="flex flex-row space-x-2 ">
+            <div class="rounded-xl border p-3 pl-5 basis-1/2 text-gray-500 text-xs">
+             
+             
+              <div class="flex flex-row items-center justify-between">
+              <div>
+
+                ACHIEVEMENTS
+                  <p class="text-black font-bold text-xl  mt-2 mb-2">
+                    Account registered!
+                    </p>
+              </div>
+                <div class="rounded-2xl items-center justify-center bg-primary flex w-12 h-12">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+</svg>
+
+                </div>
+              </div>
+
+            </div>
+            <div class="rounded-xl border p-3 pl-5 basis-1/2 text-gray-500 text-xs">
+             
+             
+              <div class="flex flex-row items-center justify-between">
+              <div>
+
+                STATS
+                  <p class=" text-orange-500 font-bold text-xl  mt-2 mb-2">
+                    Training not completed.
+                    </p>
+              </div>
+                <div class="rounded-2xl items-center justify-center bg-primary flex w-12 h-12">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
+</svg>
+
+
+                </div>
+              
+              </div>
+
+            </div>
+          </div>
+          <div class="mt-2 p-3 pl-5 bg-primary rounded-lg">
+          <div class="flex flex-row w-full items-center space-x-5">
+            <p class="basis-1/5 text-white text-lg">
+              Next session
+            </p>
+            <p class="basis-2/5 justify-start text-white text-xs">
+              DATE
+            </p>
+            <p class="basis-2/5 justify-start text-white text-xs">
+              TIME
+            </p>
+          </div>
+          <div class="flex flex-row justify-start items-center space-x-5 mb-5">
+            <p class="basis-1/5">
+            <div class="flex flex-row items-center space-x-2 rounded-xl text-sm w-16 p-1 pl-2 bg-white text-black hover:bg-gray-100 hover:cursor-pointer">
+                <p>
+                  Join
+                </p>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+                 </svg>
+              </div>
+            </p>
+            <p class="basis-2/5 font-bold text-white text-3xl">
+              February 25, 2023
+            </p>
+            <p class="basis-2/5 text-white text-3xl font-bold">
+              11:00 PM
+            </p>
+          </div>
+          <div class="flex flex-row w-full space-x-5 items-end mb-2">
+            <p class="basis-1/5 text-white text-lg">
+             Upcoming sessions
+            </p>
+            <p class="basis-2/5 justify-start text-white text-xs">
+              DATE
+            </p>
+            <p class="basis-2/5 justify-start text-white text-xs">
+              TIME
+            </p>
+          </div>
+          <div class="flex flex-row w-full space-x-5 text-sm items-end border-t border-white py-2">
+            <p class="basis-1/5 justify-start text-white">
+              Piximo Session
+            </p>
+            <p class="basis-2/5 justify-start text-white">
+              February 27, 2023
+            </p>
+            <p class="basis-2/5 justify-start text-white">
+              11:00 PM
+            </p>
+          </div>
+          <div class="flex flex-row w-full space-x-5 text-sm items-end border-t border-white py-2">
+            <p class="basis-1/5 justify-start text-white">
+              Piximo Session
+            </p>
+            <p class="basis-2/5 justify-start text-white">
+              February 28, 2023
+            </p>
+            <p class="basis-2/5 justify-start text-white">
+              11:00 PM
+            </p>
+          </div>
+          <div class="flex flex-row w-full space-x-5 text-sm items-end border-t border-white py-2">
+            <p class="basis-1/5 justify-start text-white">
+              Piximo Session
+            </p>
+            <p class="basis-2/5 justify-start text-white">
+              March 1, 2023
+            </p>
+            <p class="basis-2/5 justify-start text-white">
+              11:00 PM
+            </p>
+          </div>
+          </div>
+          <div class="mt-2 p-3 pl-5 rounded-lg border">
+          <div class="flex flex-row w-full items-center justify-end space-x-5">
+            <p class="basis-1/5 text-black text-lg font-bold">
+              Past sessions
+            </p>
+            <p class="basis-2/5 justify-start text-black text-xs">
+              DATE
+            </p>
+            <p class="basis-2/5 justify-start text-black text-xs">
+              TIME
+            </p>
+          </div>
+          <div class="flex flex-row w-full space-x-5 text-sm items-end border-t border-black py-2">
+            <p class="basis-1/5 justify-start text-black">
+              Piximo Session
+            </p>
+            <p class="basis-2/5 justify-start text-black">
+              February 28, 2023
+            </p>
+            <p class="basis-2/5 justify-start text-black">
+              11:00 PM
+            </p>
+          </div>
+          </div>
+        </div>
       </div>
+      )}
     </>
   )
 }
