@@ -7,13 +7,13 @@ import { Navigation } from '../components/navigation'
 import { Verify } from '../components/verify'
 import { Dash } from './dash'
 import { Loading } from '../components/loading'
-import {ref, set} from "firebase/database"
+import {ref, set, get} from "firebase/database"
 import {db} from "../firebase/firebase"
 
 export function Steps() {
   const {currentUser} = useAuthValue()
   const [active, setActive] = useState(1)
-  const {timeActive, setTimeActive} = useAuthValue()
+  const { setUserData } = useAuthValue()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -24,6 +24,9 @@ export function Steps() {
         if(currentUser?.emailVerified){
           clearInterval(interval)
           set(ref(db, "users/" + currentUser?.uid + "/verified"), true)
+          get(ref(db, `users/${currentUser?.uid}`)).then((snapshot) =>{
+            setUserData(snapshot.val())
+          })
           currentUser?.getIdToken(true).then(() => {setActive(3)})
         }
       })

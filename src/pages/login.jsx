@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
 import { Navigation } from "../components/navigation";
-import {signInWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
-import {auth} from '../firebase/firebase'
-import {useNavigate} from 'react-router-dom'
-import {useAuthValue} from '../firebase/AuthContext'
+import { signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
+import { auth } from '../firebase/firebase'
+import { db } from '../firebase/firebase'
+import { get, ref } from 'firebase/database'
+import { useNavigate } from 'react-router-dom'
+import { useAuthValue } from '../firebase/AuthContext'
 // import JsonData from "./data/data.json";
 // import SmoothScroll from "smooth-scroll";
 
@@ -14,29 +16,39 @@ import {useAuthValue} from '../firebase/AuthContext'
 // });
 
 export const Login = () => {
-  
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('') 
+  const [password, setPassword] = useState('')
   const [error, setError] = useState('')
-  const {setTimeActive} = useAuthValue()
+  const { setTimeActive, setUserData, currentUser, userData, setAdmin } = useAuthValue()
   const navigate = useNavigate()
 
   const login = e => {
     e.preventDefault()
     signInWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      if(!auth.currentUser.emailVerified) {
-        sendEmailVerification(auth.currentUser)
-        .then(() => {
-          setTimeActive(true)
-          navigate('/steps')
-        })
-      .catch(err => alert(err.message))
-    }else{
-      navigate('/')
-    }
-    })
-    .catch(err => setError(err.message))
+      .then(() => {
+        if (!auth.currentUser.emailVerified) {
+          sendEmailVerification(auth.currentUser)
+            .then(() => {
+              setTimeActive(true)
+              navigate('/steps')
+            })
+            .catch(err => alert(err.message))
+        } else {
+          // console.log(ref(db, `users/${auth.currentUser.uid}/`))
+          get(ref(db, 'users/' + auth.currentUser.uid + '/')).then((snapshot) => {
+            setUserData(snapshot.val())
+
+          })
+          
+          get(ref(db, 'admin/' + auth.currentUser.uid + '/')).then((snapshot) => {
+              setAdmin(snapshot.val())
+          }).catch((err) => {})
+          navigate('/')
+
+
+        }
+      })
+      .catch(err => setError(err.message))
   };
   // const [landingPageData, setLandingPageData] = useState({});
   // useEffect(() => {
@@ -57,11 +69,11 @@ export const Login = () => {
               <form class="space-y-4 md:space-y-6" onSubmit={login}>
                 <div>
                   <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                  <input type="email" name="email" id="email" value={email} onChange={e => setEmail(e.target.value)}class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@andrew.cmu.edu" required="" />
+                  <input type="email" name="email" id="email" value={email} onChange={e => setEmail(e.target.value)} class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@andrew.cmu.edu" required="" />
                 </div>
                 <div>
                   <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                  <input type="password" name="password" id="password" value={password} onChange={e => setPassword(e.target.value)}c placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
+                  <input type="password" name="password" id="password" value={password} onChange={e => setPassword(e.target.value)} c placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
                 </div>
                 <div class="flex items-start">
                   <div class="flex items-center h-5">

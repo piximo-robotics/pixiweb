@@ -39,7 +39,9 @@ export function Signup() {
             email: auth.currentUser.email,
             verified: auth.currentUser.emailVerified,
             training: false,
+            profile: false,
           });
+          
           sendEmailVerification(auth.currentUser)   
           .then(() => {
             setTimeActive(true)

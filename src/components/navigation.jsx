@@ -7,9 +7,9 @@ import {signOut, onAuthStateChanged} from 'firebase/auth'
 import logo from '../logo.svg'
 
 function Links(props) {
-  const {currentUser} = useAuthValue()
+  const {currentUser, setCurrentUser} = useAuthValue()
   const [user, setUser] = useState(currentUser)
-  const [greet, setGreet] = useState(user?.email)
+  const [greet, setGreet] = useState(currentUser?.email)
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -19,7 +19,9 @@ function Links(props) {
 
       setInterval(() => {
         get(ref(db, `users/${currentUser?.uid}/`)).then((snapshot) => {
-          setGreet(snapshot.val().name)
+          if (snapshot.val().name) {
+            setGreet(snapshot.val().name)
+          }
         })
       }, 1000)
     }
@@ -53,6 +55,7 @@ function Links(props) {
                   className="px-3 py-2 flex items-center text-md font-bold leading-snug text-black hover:opacity-75 font-light"
                   onClick={() => signOut(auth).then(() => {
                     setUser("signedOut")
+                    setCurrentUser(null)
                   })}
                 >Logout
                 </button>

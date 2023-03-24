@@ -48,11 +48,9 @@ export function Admin() {
     times.forEach((time) => {
 
       const newTime = new Date(day.getFullYear(), day.getMonth(), day.getDate(), time, 0, 0)
-      console.log(newTime)
       push(ref(db, "timeslots/"), 
       {
         filled: false,
-        uid: "",
         date: newTime.toString(),
       })
     });
