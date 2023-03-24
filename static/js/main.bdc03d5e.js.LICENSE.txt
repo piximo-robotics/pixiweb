@@ -5,6 +5,17 @@
 */
 
 /*!
+   * Sizzle CSS Selector Engine v2.3.9
+   * https://sizzlejs.com/
+   *
+   * Copyright JS Foundation and other contributors
+   * Released under the MIT license
+   * https://js.foundation/
+   *
+   * Date: 2022-12-19
+   */
+
+/*!
   Copyright (c) 2015 Jed Watson.
   Based on code that is Copyright 2013-2015, Facebook, Inc.
   All rights reserved.
@@ -20,6 +31,20 @@
  * http://jquery.org/license
  *
  * http://api.jqueryui.com/category/ui-core/
+ */
+
+/*!
+ * jQuery JavaScript Library v3.6.3
+ * https://jquery.com/
+ *
+ * Includes Sizzle.js
+ * https://sizzlejs.com/
+ *
+ * Copyright OpenJS Foundation and other contributors
+ * Released under the MIT license
+ * https://jquery.org/license
+ *
+ * Date: 2022-12-20T21:28Z
  */
 
 /*! *****************************************************************************
