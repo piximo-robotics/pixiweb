@@ -4,10 +4,10 @@ export function Process({ fixed }) {
   return (
     <>
       <div id="process" class="flex flex-col lg:flex-row text-right mx-10">
-        <div class="col-span-6 w-1/2 rounded-xl m-3 flex flex-col">
+        <div class="col-span-6 lg:w-1/2 rounded-xl m-3 flex flex-col">
           <div class="container mx-auto  flex max-w-3xl flex-wrap justify-center rounded-xl">
             <h1 class="font-bold text-2xl justify-left mb-6">Registration process</h1>
-            <div class="mt-8 max-w-sm md:mt-0 md:ml-10 md:w-2/3">
+            <div class="mt-8 max-w-sm lg:mt-0 lg:ml-10 lg:w-2/3">
               <div class="relative flex pb-12">
                 <div class="absolute inset-0 flex h-full w-10 items-center justify-center">
                   <div class="pointer-events-none h-full w-1 bg-gray-200"></div>
@@ -55,10 +55,10 @@ export function Process({ fixed }) {
             </div>
           </div>
         </div>
-        <div class="col-span-6 w-1/2 rounded m-3 flex flex-col">
+        <div class="col-span-6 lg:w-1/2 rounded m-3 flex flex-col">
           <div class="container mx-auto  flex max-w-3xl flex-wrap justify-center rounded-xl ">
             <h1 class="font-bold text-2xl justify-left mb-6">Driving process</h1>
-            <div class="mt-8 max-w-sm md:mt-0 md:ml-10 md:w-2/3">
+            <div class="mt-8 max-w-sm lg:mt-0 lg:ml-10 lg:w-2/3">
               <div class="relative flex pb-12">
                 <div class="absolute inset-0 flex h-full w-10 items-center justify-center">
                   <div class="pointer-events-none h-full w-1 bg-gray-200"></div>

@@ -7,6 +7,7 @@ import { Navigation } from '../components/navigation'
 import { Admin } from '../components/admin'
 import { ViewUsers } from '../components/adminUsers'
 import { SessionManager } from '../components/adminSessions'
+import { Footer } from '../components/footer'
 
 export function Dash() {
 
@@ -83,9 +84,9 @@ export function Dash() {
   return (
     <>
       <Navigation />
-      <div class="mx-20 mb-20 ">
+      <div class="mx-10 lg:mx-20 mb-20 ">
 
-        <div class="p-5 flex flex-row justify-center space-x-5">
+        <div class={`p-5 flex flex-row justify-center space-x-5 ${admin ? `flex-col lg:flex-row` : ``}`}>
             <button onClick={setProfile} className={`border-none px-5 py-2 flex items-center text-md leading-snug  hover:opacity-75 font-light rounded-3xl ${profileCSS}` }>Home</button>
             <button onClick={setTimeslots} className={`border-none px-5 py-2 flex items-center text-md leading-snug hover:opacity-75 font-light rounded-3xl ${timeslotCSS}`}>Timeslots</button>
             {admin ? (
@@ -111,6 +112,7 @@ export function Dash() {
         <SessionManager />
       ) : null}
       </div>
+      <Footer/>
     </>
   )
 }

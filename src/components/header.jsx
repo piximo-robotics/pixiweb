@@ -5,8 +5,8 @@ export function Header({ fixed }) {
   return (
     <>
       <div id="header" class="flex flex-col lg:flex-row items-center justify-between h-50 pb-5">
-        <div class="lg:col-span-6 mx-20 space-y-3">
-          <div class="flex flex-row flex-start space-x-2">
+        <div class="lg:col-span-6 mx-10 mt-10 lg:mt-0 lg:mx-20 space-y-3">
+          <div class="flex flex-col lg:flex-row flex-start lg:space-x-2">
             <h1 class="text-7xl font-bold">Hi, I'm</h1>
             <h1 class="text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-primary to-primary">
               Pixi.
@@ -33,7 +33,7 @@ export function Header({ fixed }) {
           </div>
 
         </div>
-        <div class="lg:col-span-6 mx-20 justify-start">
+        <div class="lg:col-span-6 mx-10 lg:mx-20 justify-start">
        
           <img src={require("../img/blink.gif")} class="rounded-2xl my-5" alt="Blinking Piximo."></img>
         </div>

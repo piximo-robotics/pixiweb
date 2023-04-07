@@ -193,13 +193,13 @@ export function Timeslots() {
 
   return (
     <>
-      <div class="flex flex-row row md:mx-12 rounded-lg dark:border md:mt-0  xl:p-0 dark:bg-gray-800 dark:border-gray-700 mb-10">
+      <div class="flex flex-col lg:flex-row lg:row md:mx-12 rounded-lg dark:border md:mt-0  xl:p-0 dark:bg-gray-800 dark:border-gray-700 mb-10">
      
         <div class="basis-1/2 col-6 pr-10 space-y-4 md:space-y-6 flex-initial col-span-4">
           <h1 class="text-4xl font-bold leading-tight tracking-tight text-primary dark:text-white">
             Select a timeslot.
           </h1>
-          <p class="text-lg font-normal leading-tight tracking-tight text-black dark:text-white c">
+          <p class="text-lg hidden lg:block font-normal leading-tight tracking-tight text-black dark:text-white">
             Choose a specific time on {currentDay.toLocaleDateString()} to try out Pixi.
             <br></br><br></br>
             <b>How it works:</b><br></br>

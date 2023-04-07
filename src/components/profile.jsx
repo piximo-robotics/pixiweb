@@ -197,7 +197,7 @@ export function Profile() {
                   <div class="flex items-center justify-center w-full">
                     <div onDragOver={e => setDrag('border-gray-300')} onDragLeave={e => setDrag('')} class={"flex flex-col rounded-lg border-4 border-dashed hover:border-gray-300 hover:cursor-pointer drag w-full h-30 p-10 group text-center " + drag}>
                       <div class="h-full w-full text-center flex flex-col items-center justify-center items-center  ">
-                        <p class="pointer-none text-gray-500 ">Drag and drop file here <br /> or <a id="" class="text-primary hover:underline">select a file</a> from your computer.</p>
+                        <p class="pointer-none text-gray-500 ">Drag and drop file here <br /> or <a id="" class="text-primary hover:underline">select a file</a> from your device.</p>
                       </div>
                       <input {...getInputProps()} class="hidden"></input>
                     </div>
@@ -239,14 +239,8 @@ export function Profile() {
             </div>
           </div>
         </div>) : (
-        <div class="flex flex-row space-x-4">
+        <div class="flex flex-col lg:flex-row lg:space-x-4">
           <div class="basis-1/3 space-y-4">
-            {/* <div class="flex flex-row justify-between">
-        <p class="font-sm font-bold text-gray-500">PROFILE</p>
-        <div class="font-sm flex flex-row">
-          EDIT
-        </div>
-        </div> */}
             <div class="py-4 px-6 border rounded-xl">
               <div class="text-center flex flex-row justify-center">
 
@@ -296,8 +290,8 @@ export function Profile() {
               </div>
             </div>
           </div>
-          <div class="basis-2/3">
-            <div class="flex flex-row space-x-2 ">
+          <div class="basis-2/3 mt-2 lg:mt-0">
+            <div class="flex flex-col lg:flex-row space-y-2 lg:space-x-2 lg:space-y-0 ">
               <div class="rounded-xl border p-3 pl-5 basis-1/2 text-gray-500 text-xs">
 
 
@@ -343,18 +337,18 @@ export function Profile() {
             </div>
             <div class="mt-2 p-3 pl-5 bg-primary rounded-lg">
               <div class="flex flex-row w-full items-center space-x-5">
-                <p class="basis-1/5 text-white text-lg">
+                <p class="basis-1/3 lg:basis-1/5 text-white text-lg">
                   Next session
                 </p>
-                <p class="basis-2/5 justify-start text-white text-xs">
+                <p class="basis-1/3 lg:basis-2/5 justify-start text-white text-xs">
                   DATE
                 </p>
-                <p class="basis-2/5 justify-start text-white text-xs">
+                <p class="basis-1/3 lg:basis-2/5 justify-start text-white text-xs">
                   TIME
                 </p>
               </div>
               <div class="flex flex-row justify-start items-center space-x-5 mb-5">
-                <p class="basis-1/5">
+                <p class="basis-1/3 lg:basis-1/5">
                   {next?.url ? (
                   <a href={`${next.url}`} target="_blank" class="flex flex-row items-center space-x-2 rounded-xl text-sm w-16 p-1 pl-2 bg-white text-black hover:bg-gray-100 hover:cursor-pointer">
                     <p>
@@ -366,21 +360,21 @@ export function Profile() {
                   </a>
                   ): <p class="text-white text-sm">Link will show up closer to session time.</p>}
                 </p>
-                <p class="basis-2/5 font-bold text-white text-3xl">
+                <p class="basis-1/3 lg:basis-2/5 font-bold text-white text-xl lg:text-3xl">
                   {next?.date.toLocaleDateString() ? next.date.toLocaleDateString() : "Nothing scheduled yet."}
                 </p>
-                <p class="basis-2/5 text-white text-3xl font-bold">
+                <p class="basis-1/3 lg:basis-2/5 text-white text-3xl font-bold">
                   {next?.date.toLocaleTimeString() ? next.date.toLocaleTimeString() : ""}
                 </p>
               </div>
               <div class="flex flex-row w-full space-x-5 items-end mb-2">
-                <p class="basis-1/5 text-white text-lg">
+                <p class="basis-1/3 lg:basis-1/5 text-white text-lg">
                   Upcoming sessions
                 </p>
-                <p class="basis-2/5 justify-start text-white text-xs">
+                <p class="basis-1/3 lg:basis-2/5 justify-start text-white text-xs">
                   DATE
                 </p>
-                <p class="basis-2/5 justify-start text-white text-xs">
+                <p class="basis-1/3 lg:basis-2/5 justify-start text-white text-xs">
                   TIME
                 </p>
               </div>
@@ -388,13 +382,13 @@ export function Profile() {
             </div>
             <div class="mt-2 p-3 pl-5 rounded-lg border">
               <div class="flex flex-row w-full items-center justify-end space-x-5">
-                <p class="basis-1/5 text-black text-lg font-bold">
+                <p class="basis-1/3 lg:basis-1/5 text-black text-lg font-bold">
                   Past sessions
                 </p>
-                <p class="basis-2/5 justify-start text-black text-xs">
+                <p class="basis-1/3 lg:basis-2/5 justify-start text-black text-xs">
                   DATE
                 </p>
-                <p class="basis-2/5 justify-start text-black text-xs">
+                <p class="basis-1/3 lg:basis-2/5 justify-start text-black text-xs">
                   TIME
                 </p>
               </div>

@@ -18,7 +18,7 @@ export default function App() {
 
   const [currentUser, setCurrentUser] = useState(null)
   const [timeActive, setTimeActive] = useState(false)
-  const [admin, setAdmin] = useState(true)
+  const [admin, setAdmin] = useState(false)
   const [userData, setUserData] = useState(null)
   const [index, setIndex] = useState(0)
 

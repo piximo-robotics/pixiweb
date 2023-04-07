@@ -11,10 +11,9 @@ import {ref, set, get} from "firebase/database"
 import {db} from "../firebase/firebase"
 
 export function Steps() {
-  const {currentUser} = useAuthValue()
   const [active, setActive] = useState(1)
-  const { setUserData } = useAuthValue()
   const navigate = useNavigate()
+  const { setTimeActive, setUserData, currentUser, userData, setAdmin } = useAuthValue()
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -27,6 +26,9 @@ export function Steps() {
           get(ref(db, `users/${currentUser?.uid}`)).then((snapshot) =>{
             setUserData(snapshot.val())
           })
+          get(ref(db, 'admin/' + auth.currentUser.uid + '/')).then((snapshot) => {
+            setAdmin(snapshot.val())
+          }).catch((err) => {})
           currentUser?.getIdToken(true).then(() => {setActive(3)})
         }
       })
