@@ -41,15 +41,15 @@ export function Signup() {
             training: false,
             profile: false,
           });
-          
-          sendEmailVerification(auth.currentUser)   
-          .then(() => {
+        
+          // sendEmailVerification(auth.currentUser)   
+          // .then(() => {
             setTimeActive(true)
             navigate('/steps')
-          }).catch((err) => {
-            console.log(err)
-            alert(err.message)
-            })
+          // }).catch((err) => {
+          //   console.log(err)
+          //   alert(err.message)
+          //   })
         })
         .catch(err => setError(err.message))
     }
@@ -63,7 +63,17 @@ export function Signup() {
       <Navigation />
       <section class="bg-white">
         <div class="flex flex-col items-center justify-center px-6 py-8  mx-auto my-10  lg:py-0">
+        {error ? <>
+        <div class="bg-red-100 border border-red-400 md:mt-0 sm:max-w-md text-red-700 w-full px-4 py-3 space-x-2 mb-5 rounded relative" role="alert">
+  <span class="block sm:inline">{error}</span>
+  <span onClick={() => {setError('')}} class="absolute hover:cursor-pointer hover:opacity-70 top-0 bottom-0 right-0 px-4 py-3 font-bold text-red-500">
+     <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-500">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+</svg>
 
+  </span>
+</div>
+</> : ''}
           <div class="w-full bg-white rounded-lg border dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 class="text-xl font-bold leading-tight tracking-tight text-primary md:text-2xl dark:text-white">

@@ -5,6 +5,7 @@ import { createUserWithEmailAndPassword, getIdToken, sendEmailVerification } fro
 import { useAuthValue } from '../firebase/AuthContext'
 import { Navigation } from '../components/navigation'
 import { Verify } from '../components/verify'
+import { PreLaunch } from '../components/preLaunch'
 import { Dash } from './dash'
 import { Loading } from '../components/loading'
 import {ref, set, get} from "firebase/database"
@@ -19,18 +20,19 @@ export function Steps() {
     const interval = setInterval(() => {
       currentUser?.reload()
       .then(() => {
-        setActive(2)
-        if(currentUser?.emailVerified){
+        // setActive(2)
+        setActive(0) // remove after pre-launch
+        // if(currentUser?.emailVerified){
           clearInterval(interval)
-          set(ref(db, "users/" + currentUser?.uid + "/verified"), true)
+          // set(ref(db, "users/" + currentUser?.uid + "/verified"), true)
           get(ref(db, `users/${currentUser?.uid}`)).then((snapshot) =>{
             setUserData(snapshot.val())
           })
           get(ref(db, 'admin/' + auth.currentUser.uid + '/')).then((snapshot) => {
             setAdmin(snapshot.val())
           }).catch((err) => {})
-          currentUser?.getIdToken(true).then(() => {setActive(3)})
-        }
+          // currentUser?.getIdToken(true).then(() => {setActive(3)})
+        // }
       })
       .catch((err) => {
         alert(err.message)
@@ -43,7 +45,9 @@ export function Steps() {
   return (
     <>
       <Navigation />
-      {active === 1 ? (
+      {active === 0 ? (
+        <PreLaunch />
+      ) : active === 1 ? (
         <Loading />
       ) : active === 2 ? (
         <Verify />

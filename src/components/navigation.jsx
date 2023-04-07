@@ -4,12 +4,14 @@ import { useAuthValue  } from '../firebase/AuthContext'
 import {auth, db} from '../firebase/firebase'
 import { get, ref } from 'firebase/database'
 import {signOut, onAuthStateChanged} from 'firebase/auth'
+import { useNavigate } from 'react-router-dom'
 import logo from '../logo.svg'
 
 function Links(props) {
   const {currentUser, setCurrentUser} = useAuthValue()
   const [user, setUser] = useState(currentUser)
   const [greet, setGreet] = useState(currentUser?.email)
+  const navigate = useNavigate()
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -41,6 +43,7 @@ function Links(props) {
                   onClick={() => signOut(auth).then(() => {
                     setUser("signedOut")
                     setCurrentUser(null)
+                    navigate("/") //remove after prelaunch
                   })}
                 >Logout
                 </button>

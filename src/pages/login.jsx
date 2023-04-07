@@ -26,27 +26,59 @@ export const Login = () => {
     e.preventDefault()
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        if (!auth.currentUser.emailVerified) {
-          sendEmailVerification(auth.currentUser)
-            .then(() => {
-              setTimeActive(true)
-              navigate('/steps')
+        get(ref(db, 'admin/' + auth.currentUser.uid + '/')).then((snapshot) => {
+          setAdmin(snapshot.val())
+          if (snapshot.val()) {
+            if (!auth.currentUser.emailVerified) {
+              sendEmailVerification(auth.currentUser)
+                .then(() => {
+                  setTimeActive(true)
+                  navigate('/steps')
+                })
+                .catch(err => alert(err.message))
+            } else {
+              // console.log(ref(db, `users/${auth.currentUser.uid}/`))
+              get(ref(db, 'users/' + auth.currentUser.uid + '/')).then((snapshot) => {
+                setUserData(snapshot.val())
+
+              })
+
+              // get(ref(db, 'admin/' + auth.currentUser.uid + '/')).then((snapshot) => {
+              //     setAdmin(snapshot.val())
+              // }).catch((err) => {})
+              navigate('/')
+
+
+            }
+          } else {
+            get(ref(db, 'users/' + auth.currentUser.uid + '/')).then((snapshot) => {
+              setUserData(snapshot.val())
             })
-            .catch(err => alert(err.message))
-        } else {
-          // console.log(ref(db, `users/${auth.currentUser.uid}/`))
-          get(ref(db, 'users/' + auth.currentUser.uid + '/')).then((snapshot) => {
-            setUserData(snapshot.val())
 
-          })
-          
-          get(ref(db, 'admin/' + auth.currentUser.uid + '/')).then((snapshot) => {
-              setAdmin(snapshot.val())
-          }).catch((err) => {})
-          navigate('/')
+            navigate('/steps')
+          }
+        })
+        // if (!auth.currentUser.emailVerified) {
+        //   sendEmailVerification(auth.currentUser)
+        //     .then(() => {
+        //       setTimeActive(true)
+        //       navigate('/steps')
+        //     })
+        //     .catch(err => alert(err.message))
+        // } else {
+        //   // console.log(ref(db, `users/${auth.currentUser.uid}/`))
+        //   get(ref(db, 'users/' + auth.currentUser.uid + '/')).then((snapshot) => {
+        //     setUserData(snapshot.val())
+
+        //   })
+
+        //   get(ref(db, 'admin/' + auth.currentUser.uid + '/')).then((snapshot) => {
+        //       setAdmin(snapshot.val())
+        //   }).catch((err) => {})
+        //   navigate('/')
 
 
-        }
+        // }
       })
       .catch(err => setError(err.message))
   };
@@ -59,13 +91,24 @@ export const Login = () => {
     <div>
       <Navigation />
       <section class="bg-white">
-        <div class="flex flex-col items-center justify-center px-8 py-10 my-10 mx-auto lg:py-0">
-
+        <div class="flex flex-col items-center justify-center px-8 py-10 my-10 w-auto lg:py-0">
+          {error ? <>
+            <div class="bg-red-100 border border-red-400 md:mt-0 sm:max-w-md text-red-700 w-full px-4 py-3 space-x-2 mb-5 rounded relative" role="alert">
+              <span class="block sm:inline">{error}</span>
+              <span onClick={() => { setError('') }} class="absolute hover:cursor-pointer hover:opacity-70 top-0 bottom-0 right-0 px-4 py-3">
+              <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-500">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+</svg>
+              </span>
+            </div>
+          </> : ''}
           <div class="w-full bg-white rounded-lg border dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 class="text-xl font-bold leading-tight tracking-tight text-primary md:text-2xl dark:text-white">
                 Login
               </h1>
+
+
               <form class="space-y-4 md:space-y-6" onSubmit={login}>
                 <div>
                   <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
