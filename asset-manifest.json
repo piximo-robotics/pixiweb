@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/piximo-robotics.github.io/static/css/main.3f8d7b81.css",
-    "main.js": "/piximo-robotics.github.io/static/js/main.18b5ca4c.js",
-    "static/media/demo.mp4": "/piximo-robotics.github.io/static/media/demo.f496ed5a9828cf190848.mp4",
-    "static/media/blink.gif": "/piximo-robotics.github.io/static/media/blink.6d18b03e5c48fd3ae245.gif",
-    "static/media/logo.svg": "/piximo-robotics.github.io/static/media/logo.fa35285b6271dcb8c2e3dc6839cae7a1.svg",
-    "static/media/slick.svg": "/piximo-robotics.github.io/static/media/slick.2630a3e3eab21c607e21.svg",
-    "static/media/slick.eot": "/piximo-robotics.github.io/static/media/slick.a4e97f5a2a64f0ab1323.eot",
-    "static/media/slick.ttf": "/piximo-robotics.github.io/static/media/slick.c94f7671dcc99dce43e2.ttf",
-    "static/media/slick.woff": "/piximo-robotics.github.io/static/media/slick.295183786cd8a1389865.woff",
-    "index.html": "/piximo-robotics.github.io/index.html",
-    "main.3f8d7b81.css.map": "/piximo-robotics.github.io/static/css/main.3f8d7b81.css.map",
-    "main.18b5ca4c.js.map": "/piximo-robotics.github.io/static/js/main.18b5ca4c.js.map"
+    "main.css": "/static/css/main.40357e2f.css",
+    "main.js": "/static/js/main.07f7cb3f.js",
+    "static/media/demo.mp4": "/static/media/demo.f496ed5a9828cf190848.mp4",
+    "static/media/blink.gif": "/static/media/blink.6d18b03e5c48fd3ae245.gif",
+    "static/media/logo.svg": "/static/media/logo.fa35285b6271dcb8c2e3dc6839cae7a1.svg",
+    "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
+    "index.html": "/index.html",
+    "main.40357e2f.css.map": "/static/css/main.40357e2f.css.map",
+    "main.07f7cb3f.js.map": "/static/js/main.07f7cb3f.js.map"
   },
   "entrypoints": [
-    "static/css/main.3f8d7b81.css",
-    "static/js/main.18b5ca4c.js"
+    "static/css/main.40357e2f.css",
+    "static/js/main.07f7cb3f.js"
   ]
 }
