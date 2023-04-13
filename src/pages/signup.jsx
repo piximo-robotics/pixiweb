@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import {auth} from '../firebase/firebase'
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { Navigation } from "../components/navigation";
+import { Footer } from "../components/footer";
+import { Loading } from "../components/loading";
 import {createUserWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
 import {useAuthValue} from '../firebase/AuthContext';
 import {ref, set} from "firebase/database";
@@ -13,6 +15,8 @@ export function Signup() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
+  const [legal, setLegal] = useState(false)
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const {setTimeActive} = useAuthValue()
 
@@ -30,7 +34,8 @@ export function Signup() {
   const register = e => {
     e.preventDefault()
     setError('')
-    if(validatePassword()) {
+    setLoading(true)
+    if(validatePassword() && email !== '' && legal) {
       // Create a new user with email and password using firebase
         createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
@@ -44,14 +49,21 @@ export function Signup() {
         
           // sendEmailVerification(auth.currentUser)   
           // .then(() => {
+            setLoading(false)
             setTimeActive(true)
             navigate('/steps')
+
           // }).catch((err) => {
           //   console.log(err)
           //   alert(err.message)
           //   })
         })
-        .catch(err => setError(err.message))
+        .catch(err => {setError(err.message)
+        setLoading(false)
+        setLegal(false)})
+    } else {
+      setLoading(false)
+      setError("Error: Make sure you have filled out all fields and that passwords match.")
     }
     // setEmail('')
     // setPassword('')
@@ -61,7 +73,9 @@ export function Signup() {
   return (
     <div>
       <Navigation />
-      <section class="bg-white">
+      {loading ? <Loading /> : (
+
+        <section class="bg-white">
         <div class="flex flex-col items-center justify-center px-6 py-8  mx-auto my-10  lg:py-0">
         {error ? <>
         <div class="bg-red-100 border border-red-400 md:mt-0 sm:max-w-md text-red-700 w-full px-4 py-3 space-x-2 mb-5 rounded relative" role="alert">
@@ -94,10 +108,10 @@ export function Signup() {
                 </div>
                 <div class="flex items-start">
                   <div class="flex items-center h-5">
-                    <input id="terms" aria-describedby="terms" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="" />
+                    <input id="terms" aria-describedby="terms" value={legal} onChange={e => setLegal(!legal)} type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="" />
                   </div>
                   <div class="ml-3 text-sm">
-                    <label for="terms" class="font-light text-gray-500 dark:text-gray-300">I accept the <a class="font-medium text-primary-500 hover:underline dark:text-primary-500" href="#">Terms and Conditions</a></label>
+                    <label for="terms" class="font-light text-gray-500 dark:text-gray-300">I accept the <a class="font-medium text-primary-500 hover:underline dark:text-primary-500" target="_blank" href="/terms">Terms and Conditions</a> and <a class="font-medium text-primary-500 hover:underline dark:text-primary-500" target="_blank" href="/privacy">Privacy Policy</a></label>
                   </div>
                 </div>
                 <button type="submit" class="w-full text-white bg-primary hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
@@ -109,6 +123,7 @@ export function Signup() {
           </div>
         </div>
       </section>
+        )}
     </div>
   );
 };

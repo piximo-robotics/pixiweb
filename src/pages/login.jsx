@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
 import { Navigation } from "../components/navigation";
+import { Footer } from "../components/footer";
+import { Loading } from "../components/loading";
 import { signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
 import { auth } from '../firebase/firebase'
 import { db } from '../firebase/firebase'
@@ -19,11 +21,13 @@ export const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
   const { setTimeActive, setUserData, currentUser, userData, setAdmin } = useAuthValue()
   const navigate = useNavigate()
 
   const login = e => {
     e.preventDefault()
+    setLoading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         get(ref(db, 'admin/' + auth.currentUser.uid + '/')).then((snapshot) => {
@@ -42,6 +46,8 @@ export const Login = () => {
                 setUserData(snapshot.val())
 
               })
+
+              setLoading(false)
 
               // get(ref(db, 'admin/' + auth.currentUser.uid + '/')).then((snapshot) => {
               //     setAdmin(snapshot.val())
@@ -80,7 +86,8 @@ export const Login = () => {
 
         // }
       })
-      .catch(err => setError(err.message))
+      .catch(err => {setError(err.message) 
+        setLoading(false)})
   };
   // const [landingPageData, setLandingPageData] = useState({});
   // useEffect(() => {
@@ -90,7 +97,9 @@ export const Login = () => {
   return (
     <div>
       <Navigation />
-      <section class="bg-white">
+      {loading ? <Loading /> : (
+
+        <section class="bg-white">
         <div class="flex flex-col items-center justify-center px-8 py-10 my-10 w-auto lg:py-0">
           {error ? <>
             <div class="bg-red-100 border border-red-400 md:mt-0 sm:max-w-md text-red-700 w-full px-4 py-3 space-x-2 mb-5 rounded relative" role="alert">
@@ -135,6 +144,8 @@ export const Login = () => {
           </div>
         </div>
       </section>
+        )}
     </div>
+  
   );
 };

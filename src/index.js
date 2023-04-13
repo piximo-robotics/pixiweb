@@ -3,6 +3,8 @@ import { Signup } from "./pages/signup";
 import { Login } from "./pages/login";
 import { Steps } from "./pages/steps";
 import { Dash } from "./pages/dash";
+import { Privacy } from "./pages/privacy";
+import { Terms } from "./pages/terms";
 import { Loading } from "./components/loading";
 import ReactDOM from "react-dom/client";
 import { AuthProvider} from './firebase/AuthContext';
@@ -79,6 +81,8 @@ export default function App() {
             <Route path="signup" element={<Signup />} />
             <Route path="login" element={<Login />} />
             <Route path="steps" element={<Steps />} />
+            <Route path="privacy" element={<Privacy />} />
+            <Route path="terms" element={<Terms />} />
           </Route>
         </Routes>
       </AuthProvider>
