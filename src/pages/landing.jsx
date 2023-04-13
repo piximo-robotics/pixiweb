@@ -7,19 +7,8 @@ import { Requirements } from "../components/requirements";
 import { Process } from "../components/process";
 import { CTA } from "../components/cta";
 import { Footer } from "../components/footer";
-// import JsonData from "./data/data.json";
-// import SmoothScroll from "smooth-scroll";
-
-// export const scroll = new SmoothScroll('a[href*="#"]', {
-//   speed: 1000,
-//   speedAsDuration: true,
-// });
 
 export const Landing = () => {
-  // const [landingPageData, setLandingPageData] = useState({});
-  // useEffect(() => {
-  //   setLandingPageData(JsonData);
-  // }, []);
 
   return (
     <div>
