@@ -36,6 +36,7 @@ export function Timeslots() {
   const [cModalIsOpen, cSetIsOpen] = useState()
   const [loading, isLoading] = useState(false)
   const [sModalIsOpen, sSetIsOpen] = useState()
+  const [error, setError] = useState('')
   // const [dayComponent, setDayComponent] = useState()
 
   useEffect(() => {
@@ -159,28 +160,30 @@ export function Timeslots() {
     //   // console.log(dayComponent)
       
     // })
-
-    fetch(`http://localhost:3500/api/users/${currentUser?.uid}/timeslot/${currentTime?.id}`, {
-      headers: {
-        'Access-Control-Allow-Origin': 'http://localhost:3500',
-        'Access-Control-Allow-Credentials': 'true'
-      }
+    currentUser?.getIdToken(true).then(function (idToken) {
+      fetch(`http://localhost:3500/api/token/${idToken}/timeslot/${currentTime?.id}`, {
+        headers: {
+          'Access-Control-Allow-Origin': 'http://localhost:3500',
+          'Access-Control-Allow-Credentials': 'true'
+        }
+      })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          cSetIsOpen(false)
+          isLoading(false)
+          sSetIsOpen(true)
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          // setIsLoaded(true);
+          setError(error);
+        }
+      )
+    }).catch(error => {
     })
-    .then(res => res.json())
-    .then(
-      (result) => {
-        cSetIsOpen(false)
-        isLoading(false)
-        sSetIsOpen(true)
-      },
-      // Note: it's important to handle errors here
-      // instead of a catch() block so that we don't swallow
-      // exceptions from actual bugs in components.
-      (error) => {
-        // setIsLoaded(true);
-        // setError(error);
-      }
-    )
   }
   var settings = {
     infinite: false,

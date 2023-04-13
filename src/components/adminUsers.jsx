@@ -4,10 +4,19 @@ import { auth, db } from "../firebase/firebase"
 import { get, ref } from "firebase/database"
 import Datepicker from "tailwind-datepicker-react"
 import { connectStorageEmulator } from 'firebase/storage'
+import { updateCurrentUser } from 'firebase/auth'
 export function ViewUsers() {
   const [users, setUsers] = useState(null);
+  const { currentUser } = useAuthValue();
+  const [mount, setMount] = useState(false);
 
   useEffect(() => {
+    if (!mount) {
+      currentUser?.getIdToken(true).then(function (idToken) {
+        console.log("Token: " + idToken);
+      });
+      setMount(true);
+    }
     get(ref(db, 'users/')).then((snapshot) => {
       var userTemp = []
       snapshot.forEach((childSnapshot) => {
@@ -62,6 +71,7 @@ export function ViewUsers() {
 
   return (
     <>
+      {currentUser?.f}
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-black dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

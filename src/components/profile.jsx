@@ -53,6 +53,7 @@ export function Profile() {
                 nextTimeslots.push({
                   date: newDate,
                   id: childSnapshot.key,
+                  tId: childSnapshot.val(),
                   url: snapshot2.val().url,
                   // url: snapshot.val().url
                 })
@@ -61,6 +62,7 @@ export function Profile() {
                 prevTimeslots.push({
                   date: newDate,
                   id: childSnapshot.key,
+                  tId: childSnapshot.val(),
                   // url: snapshot.val().url
                 })
               }
@@ -181,6 +183,33 @@ export function Profile() {
       </p>
     </div>
   ))
+
+  const goDriving = () => {
+    currentUser?.getIdToken(true).then(function (idToken) {
+      fetch(`http://localhost:3500/api/token/${idToken}/timeslot/${next.tId}`, {
+        headers: {
+          'Access-Control-Allow-Origin': 'http://localhost:3500',
+          'Access-Control-Allow-Credentials': 'true'
+        }
+      })
+      .then(res => res.text().then((text) => console.log(text)))
+      // .then(
+      //   (result) => {
+      //     return (
+      //       <p>{result}</p>
+      //     )
+      //   },
+      //   // Note: it's important to handle errors here
+      //   // instead of a catch() block so that we don't swallow
+      //   // exceptions from actual bugs in components.
+      //   (error) => {
+      //     // setIsLoaded(true);
+      //     // setError(error);
+      //   }
+      // )
+    }).catch(error => {
+    })
+  }
 
   return (
     <>
@@ -350,14 +379,24 @@ export function Profile() {
               <div class="flex flex-row justify-start items-center space-x-5 mb-5">
                 <p class="basis-1/3 lg:basis-1/5">
                   {next?.url ? (
-                  <a href={`${next.url}`} target="_blank" class="flex flex-row items-center space-x-2 rounded-xl text-sm w-16 p-1 pl-2 bg-white text-black hover:bg-gray-100 hover:cursor-pointer">
+                    <div class="flex flex-col space-y-2 w-full">
+                  <a href={`${next.url}`} target="_blank" class="bg-white flex flex-row items-center space-x-2 rounded-xl text-sm w-20 p-1 pl-2 bg-white text-black hover:bg-gray-100 hover:cursor-pointer">
                     <p>
-                      Join
+                      Zoom
                     </p>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
                     </svg>
                   </a>
+                  <div onClick={goDriving}class="w-full flex flex-row items-center space-x-2 rounded-xl text-sm w-23 p-1 pl-2 bg-white text-black hover:bg-gray-100 hover:cursor-pointer">
+                  <p>
+                    Driving Portal
+                  </p>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+                  </svg>
+                </div>
+                    </div>
                   ): <p class="text-white text-sm">Link will show up closer to session time.</p>}
                 </p>
                 <p class="basis-1/3 lg:basis-2/5 font-bold text-white text-xl lg:text-3xl">
